@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>FG Chess</title>
+  <style>
+    body {
+      background-image: url("images/OIG.jpg");
+      background-size: cover;
+      background-position: center;
+    }
+
+    .container {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      height: 100vh;
+    }
+
+    .box {
+      width: 300px;
+      height: 100px;
+      border: 1px solid black;
+      margin-bottom: 20px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      background-color: white;
+      transition: background-color 0.3s ease;
+    }
+
+    .box:hover {
+      background-color: lightgray;
+    }
+
+    .login-link {
+      position: absolute;
+      top: 10px;
+      right: 10px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      text-decoration: none;
+      color: #fff;
+      font-weight: bold;
+      transition: color 0.3s ease;
+    }
+
+    .login-link:hover {
+      color: lightgray;
+    }
+
+    .login-link img {
+      width: 40px;
+      height: 40px;
+      margin-right: 5px;
+    }
+
+    .login-link span {
+      font-size: 20px;
+    }
+    
+    .chat-container {
+      width: 400px;
+      max-height: 400px;
+      overflow-y: scroll;
+      margin-bottom: 20px;
+      padding: 10px;
+      background-color: #fff;
+      border: 1px solid #ccc;
+    }
+    
+    .user-message {
+      background-color: #eee;
+      padding: 8px;
+      margin-bottom: 6px;
+      border-radius: 5px;
+    }
+    
+    .bot-message {
+      background-color: #f0f0f0;
+      padding: 8px;
+      margin-bottom: 6px;
+      border-radius: 5px;
+    }
+  </style>
+</head>
+<body>
+  <a href="login.html" class="login-link">
+    <img src="images/me.jpg" alt="Profile Image">
+    <span>Log In</span>
+  </a>
+
+  <div class="container">
+    <div class="box" onclick="location.href='new_game.html'">
+      <h2>New Game</h2>
+    </div>
+    <div class="box" onclick="location.href='username.html'">
+      <h2>Add Friends</h2>
+    </div>
+    <div class="box" onclick="location.href='login.html'">
+      <h2>Watch Matches</h2>
+    </div>
+    
+    <div class="chat-container" id="chatContainer"></div>
+    
+    <input type="text" id="userInput" placeholder="Type your message..." onkeydown="handleUserInput(event)">
+    <button onclick="sendMessage()">Send</button>
+  </div>
+  
+  <script>
+    const chatContainer = document.getElementById('chatContainer');
+    const userInput = document.getElementById('userInput');
+
+    function handleUserInput(event) {
+      if (event.key === 'Enter') {
+        sendMessage();
+      }
+    }
+    function sendMessage() {
+  const message = userInput.value;
+  if (message.trim() !== '') {
+    displayUserMessage(message);
+    processUserMessage(message);
+    userInput.value = '';
+  }
+}
+
+function displayUserMessage(message) {
+  const userMessage = document.createElement('div');
+  userMessage.classList.add('user-message');
+  userMessage.textContent = message;
+  chatContainer.appendChild(userMessage);
+}
+
+function displayBotMessage(message) {
+  const botMessage = document.createElement('div');
+  botMessage.classList.add('bot-message');
+  botMessage.textContent = message;
+  chatContainer.appendChild(botMessage);
+}
+
+function processUserMessage(message) {
+  const userMessage = message.toLowerCase();
+
+  if (userMessage.includes('hello') || userMessage.includes('hi')) {
+    displayBotMessage('Hi there! (but i am in developing time so i can get error!)');
+  } else if (userMessage.includes('how are you')) {
+    displayBotMessage("I'm doing well, thank you!");
+  } else if (userMessage.includes('what is your name') || userMessage.includes('your name')) {
+    displayBotMessage("My name is FG Chess Bot!");
+  } else if (userMessage.includes('goodbye') || userMessage.includes('bye')) {
+    displayBotMessage('Goodbye! Have a great day!');
+  } else if (userMessage.includes('can you help me') || userMessage.includes('bye')) {
+    displayBotMessage('Yes, but i am in developing time so i can get error!');
+  } else {
+    displayBotMessage("I'm sorry, I don't have a response for that.");
+  }
+}
+</script>
+</body>
+</html>
